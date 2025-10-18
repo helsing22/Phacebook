@@ -5,69 +5,145 @@
   <title>¿Me quieres?</title>
   <style>
     body {
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding-top: 100px;
-      transition: background 1s ease;
+      overflow: hidden;
     }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
     .heart {
-      font-size: 100px;
+      font-size: 120px;
       color: red;
       animation: pulse 1s infinite;
-      transition: transform 0.5s, color 0.5s;
+      text-shadow: 0 0 20px rgba(255,0,0,0.7);
+      transition: all 1s ease;
     }
+
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
+      0% { transform: scale(1);}
+      50% { transform: scale(1.3);}
+      100% { transform: scale(1);}
     }
+
     .question {
-      font-size: 24px;
+      font-size: 28px;
       margin: 20px 0;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
+
     .buttons button {
       font-size: 20px;
-      padding: 10px 20px;
+      padding: 12px 25px;
       margin: 10px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.3s;
     }
+
+    .buttons button:hover {
+      transform: scale(1.1);
+    }
+
     .yes {
       background-color: #ff4d4d;
       color: white;
+      box-shadow: 0 0 15px rgba(255,77,77,0.7);
     }
+
     .no {
-      background-color: #cccccc;
-      color: black;
+      background-color: #555;
+      color: white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
+
     .sad-message {
       display: none;
-      font-size: 22px;
-      color: #333;
+      font-size: 24px;
+      color: #eee;
       margin-top: 30px;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 2s ease;
+    }
+
+    /* Partículas flotantes */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh) scale(0.5);}
+      to { transform: translateY(-10vh) scale(1);}
+    }
+
+    /* Lágrimas */
+    .tear {
+      position: absolute;
+      font-size: 20px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh); opacity: 1;}
+      100% { transform: translateY(110vh); opacity: 0;}
     }
   </style>
 </head>
 <body>
+  <!-- Música de fondo -->
+  <audio autoplay loop>
+    <source src="tu-musica.mp3" type="audio/mpeg">
+    <!-- Puedes poner un enlace a música libre de derechos -->
+  </audio>
+
   <div class="heart" id="heart">❤️</div>
   <div class="question" id="question">¿Me quieres?</div>
   <div class="buttons" id="buttons">
     <button class="yes" onclick="sendLove()">Sí</button>
     <button class="no" onclick="rejectLove()">No</button>
   </div>
-  <div class="sad-message" id="sadMessage">💔 Tu “no” dejó el corazón en silencio…</div>
+  <div class="sad-message" id="sadMessage">💔 Tu “no” apagó la luz y dejó caer lágrimas en silencio…</div>
 
   <script>
+    // Crear partículas flotantes
+    for (let i = 0; i < 30; i++) {
+      let p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = (5 + Math.random() * 10) + "s";
+      p.style.opacity = Math.random();
+      document.body.appendChild(p);
+    }
+
     function sendLove() {
-      window.location.href = "https://wa.me/5355015233?text=Te%20quiero%20mucho%20❤️";
+      // Efecto de destello
+      document.body.style.background = "radial-gradient(circle, #fff 0%, #ff4d4d 100%)";
+      setTimeout(() => {
+        window.location.href = "https://wa.me/5355015233?text=Te%20quiero%20mucho%20❤️";
+      }, 1000);
     }
 
     function rejectLove() {
-      document.body.style.background = "#999";
+      document.body.style.background = "#111";
       const heart = document.getElementById("heart");
       heart.textContent = "💔";
       heart.style.color = "black";
@@ -77,6 +153,16 @@
       const sad = document.getElementById("sadMessage");
       sad.style.display = "block";
       setTimeout(() => { sad.style.opacity = 1; }, 100);
+
+      // Lluvia de lágrimas
+      for (let i = 0; i < 20; i++) {
+        let tear = document.createElement("div");
+        tear.className = "tear";
+        tear.textContent = "💧";
+        tear.style.left = Math.random() * 100 + "vw";
+        tear.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(tear);
+      }
     }
   </script>
 </body>
